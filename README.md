@@ -14,13 +14,13 @@ Usage for GPU (with GPU also responsible for rendering desktop):
 THEANO_FLAGS=device=gpu,floatX=float32,lib.cnmem=0.8 python main.py experiment/
 ```
 
-Usage for GPU (GPU running headless and needs no memory for desktop):
+Usage for GPU (with GPU running headless and needing no memory for desktop):
 
 ```
 THEANO_FLAGS=device=gpu,floatX=float32,lib.cnmem=1 python main.py experiment/
 ```
 
-After 2000 epochs this leads to a variational lower bound of -91.33 for 5 samples (paper obtains -93.6).
+After 2000 epochs this leads to a variational lower bound of -91.33 for 5 samples (VIMCO paper obtains -93.6).
 
 Expected output:
 
