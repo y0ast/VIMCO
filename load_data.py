@@ -7,9 +7,8 @@ from os.path import expanduser
 def load_data():
     # Binarized MNIST, according to Salakhutdinov, Murray (2008)
     # retrieved from http://www.capsec.org/datasets/mnist_salakhutdinov.pkl.gz
-    home = expanduser("~")
 
-    f = gzip.open(home + '/Thesis/data/mnist_salakhutdinov.pkl', 'rb')
+    f = gzip.open('data/mnist_salakhutdinov.pkl.gz', 'rb')
     (x_train, t_train), (x_valid, t_valid), (x_test, t_test) = pickle.load(f)
     f.close()
 

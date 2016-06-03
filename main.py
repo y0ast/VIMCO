@@ -23,7 +23,6 @@ args = parser.parse_args()
 # parse the supplied config file
 config = ConfigParser.ConfigParser()
 config.read(args.path + "/parameters.cfg")
-
 batch_size = config.getint('parameters', 'batch_size')
 layers = config.get('parameters', 'layers')
 max_epoch = config.getint('parameters', 'max_epoch')
@@ -33,7 +32,7 @@ b2 = config.getfloat('parameters', 'b2')
 learning_rate = config.getfloat('parameters', 'learning_rate')
 lam = config.getfloat('parameters', 'lam')
 
-data_train, data_valid, data_test = load_data(dataset)
+data_train, data_valid, data_test = load_data()
 layers = [data_train.shape[1]] + map(int, layers.split(','))
 
 config.write((sys.stdout))
@@ -41,9 +40,7 @@ config.write((sys.stdout))
 if args.test:
     n_samples = 1000
 
-
 SBN = SBN(layers, batch_size, b1, b2, lam)
-
 
 # deprecated
 # SBN = herd2SBN(n_samples, layers, batch_size, b1, b2, lam, data_train.shape[0], data_valid.shape[0])

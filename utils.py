@@ -52,14 +52,14 @@ def logsubexp(A, B):
     return result
 
 def logsumexp(A, axis=None):
-    A_max = tt.max(x, axis=axis, keepdims=True)
-    return tt.log(T.sum(tt.exp(A - A_max), axis=axis, keepdims=True)) + A_max
+    A_max = tt.max(A, axis=axis, keepdims=True)
+    return tt.log(tt.sum(tt.exp(A - A_max), axis=axis, keepdims=True)) + A_max
 
 
 def replicate_batch(batch, repeat):
-	batch_size, dim_data = batch.shape
+    batch_size, dim_data = batch.shape
     batch_ext = batch.dimshuffle((0, 'x', 1))
-    batch_rep = batch_ext + tt.zeros((batch_size, repeat, dim_data]), dtype=theano.config.floatX)
+    batch_rep = batch_ext + tt.zeros((batch_size, repeat, dim_data), dtype=theano.config.floatX)
     batch_res = batch_rep.reshape([batch_size * repeat, dim_data])
 
     return batch_res
