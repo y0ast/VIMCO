@@ -3,9 +3,7 @@ from __future__ import division
 import numpy as np
 import theano.tensor as tt
 import theano
-from utils import replicate_batch, logsumexp, logsubexp, sigmoid
-import time
-from collections import OrderedDict
+from utils import logsumexp, logsubexp, sigmoid
 
 from Model import Model
 
@@ -44,7 +42,7 @@ class VIMCO(Model):
 
         # Equation 10
         sum_min_i = logsubexp(sum_p_over_q.dimshuffle(0, 'x'), f_x_h)
-        sum_min_i_normalized = sum_min_i - tt.log(n_samples - 1).astype(theano.config.floatX)
+        sum_min_i_normalized = sum_min_i - np.log(n_samples - 1).astype(theano.config.floatX)
 
         L_h_given_h = L.dimshuffle(0, 'x') - sum_min_i_normalized  # equation (10)
 
@@ -56,7 +54,6 @@ class VIMCO(Model):
 
         part_2 = exp_weights * f_x_h
 
-        # estimator = (warm_up_part_1 + part_2).sum() / self.batch_size
         estimator = (part_1 + part_2).sum() / self.batch_size
 
         gradients = tt.grad(estimator,

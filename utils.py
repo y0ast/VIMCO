@@ -46,9 +46,14 @@ def logsubexp(A, B):
     Numerically stable log(exp(A) - exp(B))
 
     """
+    
     # Just adding an epsilon here does not work: the optimizer moves it out
     result = A + tt.log(1 - tt.clip(tt.exp(B - A), epsilon, 1-epsilon))
     return result
+
+def logsumexp(A, axis=None):
+    A_max = tt.max(x, axis=axis, keepdims=True)
+    return tt.log(T.sum(tt.exp(A - A_max), axis=axis, keepdims=True)) + A_max
 
 
 def replicate_batch(batch, repeat):

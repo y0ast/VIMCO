@@ -1,6 +1,5 @@
 from __future__ import division
 
-import cPickle
 import numpy as np
 import theano
 import theano.tensor as tt
