@@ -1,6 +1,6 @@
 #Variational Inference for Monte Carlo objectives (VIMCO)
 
-This repository contains all the code necessary to reproduce the results of the [VIMCO](http://arxiv.org/abs/1602.06725) paper using Theano.
+This repository contains all the code necessary to reproduce the results of the [VIMCO](http://arxiv.org/abs/1602.06725) paper using Theano. This code follows the original implementation as closely as possible. For 5 samples it obtains a better score than what is mentioned in the original paper (-91.7 vs -93.6).
 
 Usage for CPU:
 
