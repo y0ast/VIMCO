@@ -57,7 +57,6 @@ class SBN(VIMCO):
             batch_L = self.likelihood_test(*samples)
 
             batch_likelihood_list = np.append(batch_likelihood_list, batch_L)
-            print "{0} out of {1}".format(i, len(batch_order))
 
         assert(batch_likelihood_list.shape[0] == len(batch_order))
 
