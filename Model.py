@@ -17,6 +17,7 @@ class Model(object):
 
         # Regularization parameter
         self.lam = lam
+        self.t = theano.shared(0, name='t')
 
         self.batch_size = batch_size
 
@@ -72,9 +73,12 @@ class Model(object):
     def get_batch_order(self, N):
         return range(int(N / self.batch_size))
 
-    def get_adam_updates(self, gradients, learning_rate, epoch):
+    def get_adam_updates(self, gradients, learning_rate):
         updates = OrderedDict()
-        gamma = tt.sqrt(1 - self.b2**epoch) / (1 - self.b1**epoch)
+        new_t = self.t + 1
+        gamma = tt.sqrt(1 - self.b2**new_t) / (1 - self.b1**new_t)
+
+        updates[self.t] = new_t
 
         values_iterable = zip(self.params.keys(), self.params.values(),\
                               gradients, self.m.values(), self.v.values())
@@ -116,8 +120,3 @@ class Model(object):
         save_parameters(path + "/parameters.pkl", self.params)
         save_parameters(path + "/m.pkl", self.m)
         save_parameters(path + "/v.pkl", self.v)
-
-
-
-
-

@@ -61,6 +61,7 @@ else:
     valid_likelihood_list = np.load(args.path + "/ll_valid.npy")
 
     epoch = train_likelihood_list.shape[0]
+    SBN.t.set_value(epoch * np.floor(data_train.shape[0] / batch_size))
 
     print "restarting at iteration: ", epoch + 1
 
@@ -78,7 +79,7 @@ while epoch < max_epoch:
     epoch += 1
     start = time.time()
 
-    train_likelihood = SBN.train(learning_rate, epoch)
+    train_likelihood = SBN.train(learning_rate)
     steps = np.floor(data_train.shape[0] / batch_size) * epoch
     print "E: {}, S: {:.2e}, L: {}, T: {}".format(epoch, steps, train_likelihood, time.time() - start)
     train_likelihood_list = np.append(train_likelihood_list, train_likelihood)

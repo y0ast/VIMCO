@@ -17,14 +17,14 @@ class SBN(VIMCO):
         self.init_parameters()
         self.init_adam_parameters()
 
-    def train(self, learning_rate, epoch):
+    def train(self, learning_rate):
         batch_likelihood_list = np.array([])
         batch_order = self.get_batch_order(self.N_train)
         self.prng.shuffle(batch_order)
 
         for i, batch in enumerate(batch_order):
             samples = self.sample_train(batch)
-            batch_L = self.update_train(learning_rate, epoch, *samples)
+            batch_L = self.update_train(learning_rate, *samples)
 
             batch_likelihood_list = np.append(batch_likelihood_list, batch_L)
 
@@ -105,7 +105,6 @@ class SBN(VIMCO):
         self.sample_test = theano.function([batch], samples, givens=givens)
 
     def compile_model(self):
-        epoch = tt.scalar('epoch')
         learning_rate = tt.scalar('learning_rate')
 
         n_layers = len(self.layers)
@@ -138,9 +137,9 @@ class SBN(VIMCO):
 
         likelihood, gradients = self.compute_estimator(log_p_all, log_q_all)
 
-        updates = self.get_adam_updates(gradients, learning_rate, epoch)
+        updates = self.get_adam_updates(gradients, learning_rate)
 
-        self.update_train = theano.function([learning_rate, epoch] + samples,
+        self.update_train = theano.function([learning_rate] + samples,
                                             likelihood,
                                             updates=updates)
 

@@ -20,7 +20,7 @@ def load_parameters(path):
     for key in saved_parameters.keys():
         cast_parameter = saved_parameters[key].astype(theano.config.floatX)
 
-        theano_parameters[key] = theano.shared(cast_parameter)
+        theano_parameters[key] = theano.shared(cast_parameter, name=key)
 
     return theano_parameters
 
